@@ -172,3 +172,14 @@ const summary = `${title}, a ${pages}-page long book, was written by ${author} a
 const pagesRange = pages > 1000 ? 'over a thousand' : "less than 1000"
 console.log(`The book has ${pagesRange} pages`);
 // if/else statement is as the name says a statement, so does NOT return a value; which is different from ternaries that are considered expressions, so we could use them in  template literals.
+
+// Arrow functions
+// useful for single-line functions
+/* 
+function getYear(str) {
+  return str.split("-")[0]
+} */
+
+const getYear = str => str.split("-")[0]
+
+console.log(getYear(publicationDate))
