@@ -163,3 +163,12 @@ const updatedBook = {
   // overwriting an existing property
   pages: 1210,
 };
+
+// Template literals
+const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${publicationDate.split('-')[0]}`
+
+// Ternaries instead of if/else statements
+// an operator is a bit similar to a function: it always return a value
+const pagesRange = pages > 1000 ? 'over a thousand' : "less than 1000"
+console.log(`The book has ${pagesRange} pages`);
+// if/else statement is as the name says a statement, so does NOT return a value; which is different from ternaries that are considered expressions, so we could use them in  template literals.
