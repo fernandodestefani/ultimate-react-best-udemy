@@ -1,3 +1,4 @@
+// array of objects is the most common data structure that we find in front-end development
 const data = [
   {
     id: 1,
@@ -244,9 +245,30 @@ console.log(pagesAllBooks);
 
 // The array sort method - this is not a functional method, because it mutates the original array. One way to deal with that is first take a copy of the array
 const arr = [3, 7, 1, 9, 6];
-const sorted = arr.slice().sort((a,b) => a - b)// ascending way
-const sorted2 = arr.slice().sort((a, b) => b - a)// descending way
-console.log(sorted, sorted2, arr)
+const sorted = arr.slice().sort((a, b) => a - b); // ascending way
+const sorted2 = arr.slice().sort((a, b) => b - a); // descending way
+console.log(sorted, sorted2, arr);
 
-const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages).map(book=> book.title)
-console.log(sortedByPages)
+const sortedByPages = books
+  .slice()
+  .sort((a, b) => b.pages - a.pages)
+  .map((book) => book.title);
+console.log(sortedByPages);
+
+// Working with immutable arrays
+// 1) Add book object to array
+const newBook = {
+  id: 6,
+  title: "Harry Potter and the Chamber of Secrets",
+  author: "J. K. Rowling",
+};
+const booksAfterAdd = [...books, newBook]; // spread operator
+
+// 2) Delete a book object from the array
+// always new arrays
+const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3); // filter
+
+// 3) Update a book object in the array
+const booksAfterUpdate = booksAfterDelete.map((book) =>
+  book.id === 1 ? {...book, pages: 1210} : book
+); // map
