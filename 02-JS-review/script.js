@@ -183,3 +183,20 @@ function getYear(str) {
 const getYear = str => str.split("-")[0]
 
 console.log(getYear(publicationDate))
+
+// Short Circuiting And Logical Operators
+// And - uses as an if
+console.log(true && "some string") // returns the second value
+console.log(false && "some string") // returns the first one - short circuiting
+console.log(hasMovieAdaptation && "This book has a movie")
+// falsy value -> 0, "", null, undefined
+console.log('fernando' && "some string") // here fernando is a truthy value
+console.log(0 && 'some string') // short circuiting, because 0 is a falsy value
+
+// Or - work in the opposite way
+console.log(true || 'some string') // returns true
+console.log(false || 'some string')
+// it is used to set a default value
+const spanishTranslation = book.translations.spanish || "not translated";
+// be careful when the value is 0, because this is a falsy value. to solve this js added a new operator called the nullish coalescing operator. it works very similar to the or operator, but it does also short circuiting for falsy values. Only return the second value when the first value is null or undefined
+console.log(0 ?? "no data")
