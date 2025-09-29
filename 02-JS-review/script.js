@@ -236,4 +236,17 @@ console.log(longBooksWithMovie);
 const adventureBooks = books
   .filter((book) => book.genres.includes("adventure"))
   .map((book) => book.title);
-console.log(adventureBooks)
+console.log(adventureBooks);
+
+// The array reduce method - it reduces the entire array to just one value. It has two parameters -> callback function with acc as a parameter and starter value
+const pagesAllBooks = books.reduce((acc, book) => book.pages + acc, 0);
+console.log(pagesAllBooks);
+
+// The array sort method - this is not a functional method, because it mutates the original array. One way to deal with that is first take a copy of the array
+const arr = [3, 7, 1, 9, 6];
+const sorted = arr.slice().sort((a,b) => a - b)// ascending way
+const sorted2 = arr.slice().sort((a, b) => b - a)// descending way
+console.log(sorted, sorted2, arr)
+
+const sortedByPages = books.slice().sort((a, b) => b.pages - a.pages).map(book=> book.title)
+console.log(sortedByPages)
