@@ -226,3 +226,14 @@ const essentialData = books.map((book) => ({
 }));
 
 console.log(essentialData);
+
+// The array filter method - filters out some array elements; instead of returning the value that we want, we need to return a condition which either will be true ou false; if the result is true, then the current element will go into the filtered array
+const longBooksWithMovie = books
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+console.log(longBooksWithMovie);
+
+const adventureBooks = books
+  .filter((book) => book.genres.includes("adventure"))
+  .map((book) => book.title);
+console.log(adventureBooks)
