@@ -144,67 +144,85 @@ function getBook(id) {
 }
 
 // Destructuring
-const book = getBook(1);
-const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
-  book;
 
-const [primaryGenre, secondaryGenre, ...otherGenres] = genres; // rest operator
+// const book = getBook(1);
+// const { title, author, pages, publicationDate, genres, hasMovieAdaptation } =
+//   book;
 
-/* Objeto → {} (chave/valor, pega pelo nome da propriedade)
-Array → [] (ordem, pega pela posição) */
+// const [primaryGenre, secondaryGenre, ...otherGenres] = genres; // rest operator
 
-const newGenres = [...genres, "epic fantasy"]; // spread operator for arrays
+// /* Objeto → {} (chave/valor, pega pelo nome da propriedade)
+// Array → [] (ordem, pega pela posição) */
 
-// spread operator for update and create new properties in objects
-const updatedBook = {
-  ...book,
-  // adding a new property
-  moviePublicationDate: "2001-12-19",
-  // overwriting an existing property
-  pages: 1210,
-};
+// const newGenres = [...genres, "epic fantasy"]; // spread operator for arrays
 
-// Template literals
-const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${publicationDate.split('-')[0]}`
+// // spread operator for update and create new properties in objects
+// const updatedBook = {
+//   ...book,
+//   // adding a new property
+//   moviePublicationDate: "2001-12-19",
+//   // overwriting an existing property
+//   pages: 1210,
+// };
 
-// Ternaries instead of if/else statements
-// an operator is a bit similar to a function: it always return a value
-const pagesRange = pages > 1000 ? 'over a thousand' : "less than 1000"
-console.log(`The book has ${pagesRange} pages`);
-// if/else statement is as the name says a statement, so does NOT return a value; which is different from ternaries that are considered expressions, so we could use them in  template literals.
+// // Template literals
+// const summary = `${title}, a ${pages}-page long book, was written by ${author} and published in ${publicationDate.split('-')[0]}`
 
-// Arrow functions
-// useful for single-line functions
-/* 
-function getYear(str) {
-  return str.split("-")[0]
-} */
+// // Ternaries instead of if/else statements
+// // an operator is a bit similar to a function: it always return a value
+// const pagesRange = pages > 1000 ? 'over a thousand' : "less than 1000"
+// console.log(`The book has ${pagesRange} pages`);
+// // if/else statement is as the name says a statement, so does NOT return a value; which is different from ternaries that are considered expressions, so we could use them in  template literals.
 
-const getYear = str => str.split("-")[0]
+// // Arrow functions
+// // useful for single-line functions
+// /*
+// function getYear(str) {
+//   return str.split("-")[0]
+// } */
 
-console.log(getYear(publicationDate))
+// const getYear = str => str.split("-")[0]
 
-// Short Circuiting And Logical Operators
-// And - uses as an if
-console.log(true && "some string") // returns the second value
-console.log(false && "some string") // returns the first one - short circuiting
-console.log(hasMovieAdaptation && "This book has a movie")
-// falsy value -> 0, "", null, undefined
-console.log('fernando' && "some string") // here fernando is a truthy value
-console.log(0 && 'some string') // short circuiting, because 0 is a falsy value
+// console.log(getYear(publicationDate))
 
-// Or - work in the opposite way
-console.log(true || 'some string') // returns true
-console.log(false || 'some string')
-// it is used to set a default value
-const spanishTranslation = book.translations.spanish || "not translated";
-// be careful when the value is 0, because this is a falsy value. to solve this js added a new operator called the nullish coalescing operator. it works very similar to the or operator, but it does also short circuiting for falsy values. Only return the second value when the first value is null or undefined
-console.log(0 ?? "no data")
+// // Short Circuiting And Logical Operators
+// // And - uses as an if
+// console.log(true && "some string") // returns the second value
+// console.log(false && "some string") // returns the first one - short circuiting
+// console.log(hasMovieAdaptation && "This book has a movie")
+// // falsy value -> 0, "", null, undefined
+// console.log('fernando' && "some string") // here fernando is a truthy value
+// console.log(0 && 'some string') // short circuiting, because 0 is a falsy value
 
-// Optional chaining
-function getTotalReviewCount(book){
-  const goodreads = book.reviews?.goodreads?.reviewsCount;
-  const librarything = book.reviews?.librarything?.reviewsCount ?? 0; // it is useful when we are not sure that all the values that we expect exist in an object
-  return goodreads + librarything;
-}
-console.log(getTotalReviewCount(book));
+// // Or - work in the opposite way
+// console.log(true || 'some string') // returns true
+// console.log(false || 'some string')
+// // it is used to set a default value
+// const spanishTranslation = book.translations.spanish || "not translated";
+// // be careful when the value is 0, because this is a falsy value. to solve this js added a new operator called the nullish coalescing operator. it works very similar to the or operator, but it does also short circuiting for falsy values. Only return the second value when the first value is null or undefined
+// console.log(0 ?? "no data")
+
+// // Optional chaining
+// function getTotalReviewCount(book){
+//   const goodreads = book.reviews?.goodreads?.reviewsCount;
+//   const librarything = book.reviews?.librarything?.reviewsCount ?? 0; // it is useful when we are not sure that all the values that we expect exist in an object
+//   return goodreads + librarything;
+// }
+// console.log(getTotalReviewCount(book));
+
+// The array map method - creates a new array based on the original array with some operation aplied to each element
+
+// const x = [1, 2, 3, 4, 5].map(el => el * 2);
+// console.log(x)
+
+const books = getBooks();
+const titles = books.map((book) => book.title);
+console.log(titles);
+
+//instead of using returning on an array function, we can use (). in this case {} is not a block of code, it represents an object
+const essentialData = books.map((book) => ({
+  title: book.title,
+  author: book.author,
+}));
+
+console.log(essentialData);
