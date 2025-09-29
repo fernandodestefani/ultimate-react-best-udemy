@@ -200,3 +200,11 @@ console.log(false || 'some string')
 const spanishTranslation = book.translations.spanish || "not translated";
 // be careful when the value is 0, because this is a falsy value. to solve this js added a new operator called the nullish coalescing operator. it works very similar to the or operator, but it does also short circuiting for falsy values. Only return the second value when the first value is null or undefined
 console.log(0 ?? "no data")
+
+// Optional chaining
+function getTotalReviewCount(book){
+  const goodreads = book.reviews?.goodreads?.reviewsCount;
+  const librarything = book.reviews?.librarything?.reviewsCount ?? 0; // it is useful when we are not sure that all the values that we expect exist in an object
+  return goodreads + librarything;
+}
+console.log(getTotalReviewCount(book));
