@@ -216,7 +216,7 @@ function getBook(id) {
 // const x = [1, 2, 3, 4, 5].map(el => el * 2);
 // console.log(x)
 
-const books = getBooks();
+/* const books = getBooks();
 const titles = books.map((book) => book.title);
 console.log(titles);
 
@@ -271,4 +271,23 @@ const booksAfterDelete = booksAfterAdd.filter((book) => book.id !== 3); // filte
 // 3) Update a book object in the array
 const booksAfterUpdate = booksAfterDelete.map((book) =>
   book.id === 1 ? {...book, pages: 1210} : book
-); // map
+); // map */
+
+// Asynchronous JS: Promises
+// fetch returns a promise, and as long as it is fulfilled, we can handle it by using then and converting the data to a JS object. By doing so it will return another promise.
+/* fetch("https://jsonplaceholder.typicode.com/todos")
+  .then((res) => res.json())
+  .then((data) => console.log(data)); */
+
+// Asynchronous JS: Async/Await
+// it does the same thing above in a cleaner way, where the then handlers go away
+
+async function getTodos() {
+  const res = await fetch("https://jsonplaceholder.typicode.com/todos") // for the first time in JS, we do actually have a way of stopping and pausing the code inside a function. By doing this, it makes the function looks a lot more normal again, a lot more synchronous JS code, because then we can simply store the result of this here into a variable.
+  const data = await res.json();
+  console.log(data) 
+  // the waiting only works inside this async function
+  // the result value of an async function is always a promise
+}
+
+getTodos()
