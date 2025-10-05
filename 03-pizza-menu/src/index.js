@@ -74,18 +74,26 @@ function Header() {
 
 function Menu() {
   const pizzas = pizzaData;
+  // const pizzas = []
   const numPizzas = pizzas.length;
+  // React Fragment basically lets us group some elements without leaving any trace in the HTML tree, so in the DOM.
 
   return (
     <main className="menu">
       <h2>Our menu</h2>
 
       {numPizzas > 0 ? (
-        <ul className="pizzas">
-          {pizzas.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
-          ))}
-        </ul>
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creatives dishes to choose from. All
+            from our stone oven, all organic, all delicious.
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
       ) : (
         <p>We're still working on our menu. Please come back later :)</p>
       )}
@@ -108,7 +116,7 @@ function Menu() {
 
 // conditional rendering => ternary operation to return some piece of JSX based on a condition or multiple returns to return something entirely different
 
-function Pizza({pizzaObj}) {
+function Pizza({ pizzaObj }) {
   if (pizzaObj.soldOut) return null;
 
   return (
@@ -142,7 +150,9 @@ function Footer() {
 
   return (
     <footer className="footer">
-      {isOpen ? <Order closeHour={closeHour} openHour={openHour}/> : (
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour} />
+      ) : (
         <p>
           We're happy to welcome you between {openHour}:00 and {closeHour}:00
         </p>
@@ -152,10 +162,13 @@ function Footer() {
   // return React.createElement("footer", null, "We're currently open!")
 }
 
-function Order({closeHour, openHour}) {
+function Order({ closeHour, openHour }) {
   return (
     <div className="order">
-      <p>We're open from {openHour}:00 to {closeHour}:00. Come visit us or order online.</p>
+      <p>
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online.
+      </p>
       <button className="btn">Order</button>
     </div>
   );
