@@ -5,9 +5,8 @@ export default function App() {
   const [step, setStep] = useState(0);
   const [count, setCount] = useState(0);
 
-  const today = new Date();
-  const date = new Date(today);
-  date.setDate(today.getDate() + count)
+  const date = new Date();
+  date.setDate(date.getDate() + count)
 
   // event handler functions
   function handleStepDecrease() {
