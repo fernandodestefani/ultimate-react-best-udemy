@@ -1,113 +1,184 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 
-const skills = [
+// most common type of data in front-end development: array of objects
+const pizzaData = [
   {
-    skill: "HTML+CSS",
-    level: "advanced",
-    color: "blue",
+    name: "Focaccia",
+    ingredients: "Bread with italian olive oil and rosemary",
+    price: 6,
+    photoName: "pizzas/focaccia.jpg",
+    soldOut: false,
   },
   {
-    skill: "JavaScript",
-    level: "advanced",
-    color: "yellow",
+    name: "Pizza Margherita",
+    ingredients: "Tomato and mozarella",
+    price: 10,
+    photoName: "pizzas/margherita.jpg",
+    soldOut: false,
   },
   {
-    skill: "Web Design",
-    level: "advanced",
-    color: "green",
+    name: "Pizza Spinaci",
+    ingredients: "Tomato, mozarella, spinach, and ricotta cheese",
+    price: 12,
+    photoName: "pizzas/spinaci.jpg",
+    soldOut: false,
   },
   {
-    skill: "Git and GitHub",
-    level: "advanced",
-    color: "red",
+    name: "Pizza Funghi",
+    ingredients: "Tomato, mozarella, mushrooms, and onion",
+    price: 12,
+    photoName: "pizzas/funghi.jpg",
+    soldOut: false,
   },
   {
-    skill: "React",
-    level: "beginner",
-    color: "lightblue",
+    name: "Pizza Salamino",
+    ingredients: "Tomato, mozarella, and pepperoni",
+    price: 15,
+    photoName: "pizzas/salamino.jpg",
+    soldOut: true,
   },
   {
-    skill: "Python",
-    level: "intermediate",
-    color: "orange",
+    name: "Pizza Prosciutto",
+    ingredients: "Tomato, mozarella, ham, aragula, and burrata cheese",
+    price: 18,
+    photoName: "pizzas/prosciutto.jpg",
+    soldOut: false,
   },
 ];
 
+//in jsx we cannot use class, instead className
+
 function App() {
   return (
-    <div className="card">
-      <Avatar />
-      <div className="data">
-        <Intro />
-        {/* Should contain one Skill component
-        for each web dev skill that you have,
-        customized with props */}
-        <SkillList />
+    <div className="container">
+      <Header />
+      <Menu />
+      <Footer />
+    </div>
+  );
+}
+
+function Header() {
+  // const style = {color: 'red', fontSize: '48px', textTransform: "uppercase"};
+  const style = {};
+
+  //inline style: JS object, properties in camelCase and values as strings
+  return (
+    <header className="header">
+      <h1 style={style}>Fast React Pizza Co.</h1>
+    </header>
+  );
+}
+
+function Menu() {
+  const pizzas = pizzaData;
+  // const pizzas = []
+  const numPizzas = pizzas.length;
+  // React Fragment basically lets us group some elements without leaving any trace in the HTML tree, so in the DOM.
+
+  return (
+    <main className="menu">
+      <h2>Our menu</h2>
+
+      {numPizzas > 0 ? (
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creatives dishes to choose from. All
+            from our stone oven, all organic, all delicious.
+          </p>
+          <ul className="pizzas">
+            {pizzas.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p>We're still working on our menu. Please come back later :)</p>
+      )}
+
+      {/* <Pizza
+        name="Pizza Spinaci"
+        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
+        photoName="pizzas/spinaci.jpg"
+        price={10}
+      />
+      <Pizza
+        name="Pizza Funghi"
+        ingredients= "Tomato, mozarella, mushrooms, and onion"
+        price= {12}
+        photoName= "pizzas/funghi.jpg"
+      /> */}
+    </main>
+  );
+}
+
+// conditional rendering => ternary operation to return some piece of JSX based on a condition or multiple returns to return something entirely different
+
+function Pizza({ pizzaObj }) {
+  // if (pizzaObj.soldOut) return null;
+
+
+  return (
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
+      <img src={pizzaObj.photoName} alt={pizzaObj.name} />
+      <div>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.soldOut ? "SOLD OUT" : pizzaObj.price}</span>
       </div>
-    </div>
-  );
-}
-
-function Avatar() {
-  return (
-    <img
-      src="/profile-card-photo.jpg"
-      alt="A programmer coding at night"
-      className="avatar"
-    />
-  );
-}
-
-function Intro() {
-  return (
-    <div>
-      <h1>Fernando Destefani</h1>
-      <p>
-        Front-end web developer in formation and medical doctor. When not coding
-        ou seeing pacientes, I like to play video games, experiment with
-        different foods and watch some TV series.
-      </p>
-    </div>
-  );
-}
-
-function SkillList() {
-  return (
-    <ul className="skill-list">
-      {skills.map((skill) => (
-        <Skill skillObj={skill} key={skill.skill} />
-      ))}
-
-      {/* <Skill skill="HTML+CSS" emoji="💪🏼" color="blue"/>
-      <Skill skill="JavaScript" emoji="💪🏼" color="yellow"/>
-      <Skill skill="Web Design" emoji="💪🏼" color="green"/>
-      <Skill skill="Git and GitHub" emoji="💪🏼" color="red"/>
-      <Skill skill="React" emoji="🐣" color="lightblue"/>
-      <Skill skill="Python" emoji="👍🏼" color="orange"/> */}
-    </ul>
-  );
-}
-
-function Skill({ skillObj }) {
-  return (
-    <li className="skill" style={{ backgroundColor: skillObj.color }}>
-      <span>{skillObj.skill}</span>
-      <span>
-        {skillObj.level === "beginner" && "🐣"}
-        {skillObj.level === "intermediate" && "👍🏼"}
-        {skillObj.level === "advanced" && "💪🏼"}
-      </span>
     </li>
   );
 }
 
-const rootElement = document.getElementById("root");
-const root = createRoot(rootElement);
+function Footer() {
+  const hour = new Date().getHours();
+  const openHour = 12;
+  const closeHour = 22;
+  const isOpen = hour >= openHour && hour <= closeHour;
+  console.log(isOpen);
 
+  // if (hour >= openHour && hour <= closeHour) alert("We're currently open!");
+  // else alert("Sorry we're closed");
+
+  /*   if (!isOpen)
+    return (
+      <p>
+        We're happy to welcome you between {openHour}:00 and {closeHour}:00
+      </p>
+    ); */
+
+  return (
+    <footer className="footer">
+      {isOpen ? (
+        <Order closeHour={closeHour} openHour={openHour} />
+      ) : (
+        <p>
+          We're happy to welcome you between {openHour}:00 and {closeHour}:00
+        </p>
+      )}
+    </footer>
+  );
+  // return React.createElement("footer", null, "We're currently open!")
+}
+
+function Order({ closeHour, openHour }) {
+  return (
+    <div className="order">
+      <p>
+        We're open from {openHour}:00 to {closeHour}:00. Come visit us or order
+        online.
+      </p>
+      <button className="btn">Order</button>
+    </div>
+  );
+}
+
+// React v18
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <StrictMode>
+  <React.StrictMode>
     <App />
-  </StrictMode>
+  </React.StrictMode>
 );
