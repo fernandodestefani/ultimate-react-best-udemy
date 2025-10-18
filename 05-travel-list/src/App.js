@@ -1,59 +1,69 @@
 import { useState } from "react";
 
-const faqs = [
-  {
-    title: "Where are these chairs assembled?",
-    text: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Accusantium, quaerat temporibus quas dolore provident nisi ut aliquid ratione beatae sequi aspernatur veniam repellendus.",
-  },
-  {
-    title: "How long do I have to return my chair?",
-    text: "Pariatur recusandae dignissimos fuga voluptas unde optio nesciunt commodi beatae, explicabo natus.",
-  },
-  {
-    title: "Do you ship to countries outside the EU?",
-    text: "Excepturi velit laborum, perspiciatis nemo perferendis reiciendis aliquam possimus dolor sed! Dolore laborum ducimus veritatis facere molestias!",
-  },
-];
-
 export default function App() {
-  return (
-    <div>
-      <Accordion data={faqs} />
-    </div>
-  );
-}
+  const [bill, setBill] = useState("")
+  const [tip, setTip] = useState(0)
+  const [friendTip, setFriendTip] = useState(0)
 
-function Accordion({ data }) {
-  const [curOpen, setCurOpen] = useState(null);
-
-  return (
-    <div className="accordion">
-      {data.map((el, i) => (
-        <AccordionItem
-          curOpen={curOpen}
-          onOpen={setCurOpen}
-          num={i}
-          title={el.title}
-          key={el.title}
-        >{el.text}</AccordionItem>
-      ))}
-    </div>
-  );
-}
-
-function AccordionItem({ num, title, curOpen, onOpen, children }) {
-  const isOpen = num === curOpen;
-  
-  function handleToggle() {
-    onOpen(isOpen? null : num)
+  function handleReset() {
+    setBill("");
+    setTip(0);
+    setFriendTip(0);
   }
 
   return (
-    <div className={`item ${isOpen ? "open" : ""}`} onClick={handleToggle}>
-      <p className="number">{num < 9 ? `0${num + 1}` : num + 1}</p>
-      <p className="title">{title}</p>
-      <p className="icon">{isOpen ? "-" : "+"}</p>
-      {isOpen && <div className="content-box">{children}</div>}
+    <div>
+      <BillInput bill={bill} onBill={setBill}/>
+      <SelectPercentage text="How did you like the service?" percentage={tip} onSelect={setTip} />
+      <SelectPercentage text="How did your friend like the service?" percentage={friendTip} onSelect={setFriendTip}/>
+      <Output bill={bill} tip={tip} friendTip={friendTip}/>
+      <Reset bill={bill} onReset={handleReset}/>
+    </div>
+  );
+}
+
+function BillInput({bill, onBill}) {
+  return (
+    <div className="input-row">
+      <p>How much was the bill?</p>
+      <input type="number" placeholder="$" value={bill} onChange={(e) => onBill(e.target.value)}></input>
+    </div>
+  );
+}
+
+function SelectPercentage({ text, percentage, onSelect }) {
+  return (
+    <div className="input-row">
+      <p>{text}</p>
+      <select value={percentage} onChange={(e) => onSelect(Number(e.target.value))}>
+        <option value="0">Dissatisfied (0%)</option>
+        <option value="5">It was okay (5%)</option>
+        <option value="10">It was good (10%)</option>
+        <option value="20">Absolutely amazing! (20%)</option>
+      </select>
+    </div>
+  );
+}
+
+function Output({bill, tip, friendTip}) {
+  if (!bill) return null
+  const averageTip = (tip + friendTip)/2;
+  const tipAmount = Math.round(Number(bill) * averageTip / 100);
+  const total = Number(bill) + tipAmount;
+
+  return (
+    <div className="output">
+      <h3>{`You pay $${total} ($${bill} + $${tipAmount} tip)`}</h3>
+    </div>
+  );
+}
+
+function Reset({bill, onReset}) {
+  if (!bill) return null
+
+  return (
+    <div className="input-row">
+      <button style={{padding: "1px 3px", cursor: "pointer"}} onClick={onReset}>Reset</button>
     </div>
   );
 }
