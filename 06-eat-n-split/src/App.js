@@ -32,43 +32,55 @@ function Button({ children, onClick }) {
 export default function App() {
   const [friends, setFriends] = useState(initialFriends);
   const [showAddFriend, setShowAddFriend] = useState(false);
+  const [selectedFriend, setSelectedFriend] = useState(null);
 
   function handleShowAddFriend() {
     setShowAddFriend((showAddFriend) => !showAddFriend);
   }
   function handleAddFriend(friend) {
-    setFriends(friends => [...friends, friend])
-    setShowAddFriend(false);  
+    setFriends((friends) => [...friends, friend]);
+    setShowAddFriend(false);
+  }
+  function handleSelection(friend) {
+    setSelectedFriend(cur => cur?.id === friend.id ? null : friend);
+    setShowAddFriend(false)
   }
 
   return (
     <div className="app">
       <div className="sidebar">
-        <FriendsList friends={friends}/>
-        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend}/>}
+        <FriendsList
+          friends={friends}
+          selectedFriend={selectedFriend}
+          onSelection={handleSelection}
+        />
+
+        {showAddFriend && <FormAddFriend onAddFriend={handleAddFriend} />}
+
         <Button onClick={handleShowAddFriend}>
           {showAddFriend ? "Close" : "Add friend"}
         </Button>
       </div>
-      <FormSplitBill />
+      {selectedFriend && <FormSplitBill selectedFriend={selectedFriend} />}
     </div>
   );
 }
 
-function FriendsList({friends}) {
-
+function FriendsList({ friends, onSelection, selectedFriend }) {
   return (
     <ul>
       {friends.map((friend) => (
-        <Friend friend={friend} key={friend.id} />
+        <Friend friend={friend} key={friend.id} onSelection={onSelection} selectedFriend={selectedFriend}/>
       ))}
     </ul>
   );
 }
 
-function Friend({ friend }) {
+function Friend({ friend, onSelection, selectedFriend }) {
+  const isSelected = selectedFriend?.id === friend.id;
+  
   return (
-    <li>
+    <li className={isSelected ? "selected" : ""}>
       <img src={friend.image} alt={friend.name} />
       <h3>{friend.name}</h3>
 
@@ -84,18 +96,18 @@ function Friend({ friend }) {
       )}
       {friend.balance === 0 && <p>You and {friend.name} are even</p>}
 
-      <Button>Select</Button>
+      <Button onClick={() => onSelection(friend)}>{isSelected ? "Close" : "Select"}</Button>
     </li>
   );
 }
 
-function FormAddFriend({onAddFriend}) {
+function FormAddFriend({ onAddFriend }) {
   const [name, setName] = useState("");
   const [image, setImage] = useState("https://i.pravatar.cc/48");
 
   function handleSubmit(e) {
     e.preventDefault();
-    
+
     if (!name || !image) return;
 
     const id = crypto.randomUUID();
@@ -104,9 +116,9 @@ function FormAddFriend({onAddFriend}) {
       image: `${image}?=${id}`,
       balance: 0,
       id,
-    }
+    };
 
-    onAddFriend(newFriend)
+    onAddFriend(newFriend);
 
     setName("");
     setImage("https://i.pravatar.cc/48");
@@ -122,17 +134,21 @@ function FormAddFriend({onAddFriend}) {
       />
 
       <label>🌄Image URL</label>
-      <input type="text" value={image} onChange={e=>setImage(e.target.value)}/>
+      <input
+        type="text"
+        value={image}
+        onChange={(e) => setImage(e.target.value)}
+      />
 
       <Button>Add</Button>
     </form>
   );
 }
 
-function FormSplitBill() {
+function FormSplitBill({ selectedFriend }) {
   return (
     <form className="form-split-bill">
-      <h2>Split a bill with X</h2>
+      <h2>Split a bill with {selectedFriend.name}</h2>
 
       <label>💰 Bill value</label>
       <input type="number" />
@@ -140,13 +156,13 @@ function FormSplitBill() {
       <label>🧍🏼‍♀️ Your expense</label>
       <input type="number" />
 
-      <label>🧑‍🤝‍🧑 X's expense</label>
+      <label>🧑‍🤝‍🧑 {selectedFriend.name}'s expense</label>
       <input type="number" disabled />
 
       <label>🤑 Who is paying the bill</label>
       <select>
         <option value="user">You</option>
-        <option value="friend">X</option>
+        <option value="friend">{selectedFriend.name}</option>
       </select>
 
       <Button>Split bill</Button>
