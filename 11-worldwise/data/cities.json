@@ -10,7 +10,7 @@
         "lat": 38.727881642324164,
         "lng": -9.140900099907554
       },
-      "id": 73930385
+      "id": "73930385"
     },
     {
       "cityName": "Madrid",
@@ -22,7 +22,7 @@
         "lat": 40.46635901755316,
         "lng": -3.7133789062500004
       },
-      "id": 17806751
+      "id": "17806751"
     },
     {
       "cityName": "Berlin",
@@ -34,7 +34,43 @@
         "lat": 52.53586782505711,
         "lng": 13.376933665713324
       },
-      "id": 98443197
+      "id": "98443197"
+    },
+    {
+      "id": "f478",
+      "cityName": "Treviso",
+      "country": "Italy",
+      "emoji": "🇮🇹",
+      "date": "2026-01-01T13:57:08.127Z",
+      "notes": "It's a great city!",
+      "position": {
+        "lat": "45.66835156065795",
+        "lng": "12.275761022978635"
+      }
+    },
+    {
+      "id": "2e7d",
+      "cityName": "Ligurian Sea Cetacean Sanctuary",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2026-01-01T13:59:02.117Z",
+      "notes": "What a nice and different place",
+      "position": {
+        "lat": "43.61373162994944",
+        "lng": "7.447411120165219"
+      }
+    },
+    {
+      "id": "3543",
+      "cityName": "Vigo",
+      "country": "Spain",
+      "emoji": "🇪🇸",
+      "date": "2026-01-01T14:04:51.264Z",
+      "notes": "It looks interesting, but I've never gone there before",
+      "position": {
+        "lat": "42.24498627307684",
+        "lng": "-8.646052208209124"
+      }
     }
   ]
 }
