@@ -35,6 +35,18 @@
         "lng": 13.376933665713324
       },
       "id": "98443197"
+    },
+    {
+      "id": "3b39",
+      "cityName": "Sully-la-Chapelle",
+      "country": "France",
+      "emoji": "🇫🇷",
+      "date": "2026-01-04T17:23:19.200Z",
+      "notes": "There is (...) a house (...) in New Orleans... 🎵",
+      "position": {
+        "lat": "47.952232777389334",
+        "lng": "2.1404461256994938"
+      }
     }
   ]
 }
