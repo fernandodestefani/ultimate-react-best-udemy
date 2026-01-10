@@ -3,6 +3,7 @@ import {
   useEffect,
   useContext,
   useReducer,
+  useCallback,
 } from "react";
 
 const BASE_URL = "http://localhost:9000";
@@ -74,10 +75,10 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  async function getCity(id) {
-    // everything that comes from an URL will come automatically as a string 
+  const getCity = useCallback(async function getCity(id) {
+    // everything that comes from an URL will automatically return as a string
     if (Number(id) === currentCity.id) return;
-    
+
     dispatch({ type: "loading" });
     try {
       const res = await fetch(`${BASE_URL}/cities/${id}`);
@@ -89,7 +90,7 @@ function CitiesProvider({ children }) {
         payload: "There was an error loading the city...",
       });
     }
-  }
+  }, [currentCity.id]);
 
   async function createCity(newCity) {
     dispatch({ type: "loading" });
@@ -135,7 +136,7 @@ function CitiesProvider({ children }) {
         getCity,
         createCity,
         deleteCity,
-        error
+        error,
       }}
     >
       {children}
