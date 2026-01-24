@@ -46,6 +46,8 @@ export default cartSlice.reducer;
 
 // optimize selectors => reselect library
 
+export const getCart = (state) => state.cart.cart;
+
 export const getTotalCartQuantity = (state) =>
   state.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
 
