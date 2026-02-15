@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 const StyledFormRow = styled.div`
   display: grid;
@@ -8,6 +8,13 @@ const StyledFormRow = styled.div`
 
   padding: 1.2rem 0;
 
+    ${(props) =>
+    props.$orientation === "vertical" &&
+    css`
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+    `}
+  
   &:first-child {
     padding-top: 0;
   }
@@ -21,8 +28,6 @@ const StyledFormRow = styled.div`
   }
 
   &:has(button) {
-    display: flex;
-    justify-content: flex-end;
     gap: 1.2rem;
   }
 `;
@@ -36,9 +41,9 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function FormRow({label, error, children }) {
+function FormRow({ label, error, children, orientation = "horizontal" }) {
   return (
-    <StyledFormRow>
+    <StyledFormRow $orientation={orientation}>
       {label && <Label htmlFor={children.props.id}>{label}</Label>}
       {children}
       {error && <Error>{error}</Error>}
