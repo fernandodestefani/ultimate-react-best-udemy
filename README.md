@@ -6,15 +6,40 @@
 ### **Far Away**  
 <img src="https://github.com/user-attachments/assets/6095fc64-9b72-4e9d-9f43-d5998447aac2" alt="travel-list" width="50%">
 
+A packing list application that helps users organize items for trips.
+
+**Key features:**
+- Add and remove travel items
+- Mark items as packed
+- Sort items by different criteria
+- State management with React hooks
+
 ---
 
 ### **Eat-N-Split**  
 <img src="https://github.com/user-attachments/assets/a61904b2-21b2-49e1-90bd-0c47949d2421" alt="eat-n-split" width="50%">
 
+An interactive bill splitting app for managing shared expenses with friends.
+
+**Key features:**
+- Add and manage friends
+- Split bills dynamically
+- Track who owes whom
+- State lifting and component communication
+
 ---
 
 ### **usePopcorn**  
 <img src="https://github.com/user-attachments/assets/45db540b-9bd1-4fd3-92b1-d707c6f030f1" alt="usePopcorn" width="50%">
+
+A movie search and rating application built with React.
+
+**Key features:**
+- Movie search using an external API
+- Save watched movies
+- Rate movies with a star rating system
+- Custom React hooks
+- Local storage persistence
 
 ---
 
